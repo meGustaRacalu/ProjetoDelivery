@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.delivery.app.model.Usuario;
 import com.delivery.app.repository.UsuarioRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-	public Object findAllUsuarios() {
-		return null;
+	public List<Usuario> findAllUsuarios() {
+		return usuarioRepository.findAll();
 	}
 }
