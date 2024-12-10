@@ -19,39 +19,39 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "tb_categorias")
 public class Categoria {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private String nome;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("categoria")
-	private List<Produtos> produto;
+    @NotNull
+    private String nome;
 
-	public Long getId() {
-		return id;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("categoria") 
+    private List<Produtos> produtos;  
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public List<Produtos> getProduto() {
-		return produto;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setProduto(List<Produtos> produto) {
-		this.produto = produto;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
+    public List<Produtos> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produtos> produtos) {
+        this.produtos = produtos;
+    }
 }
