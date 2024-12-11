@@ -18,22 +18,24 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.delivery.app.model.Produtos;
 import com.delivery.app.repository.ProdutosRepository;
+import com.delivery.app.service.ProdutosService;
 
 import jakarta.validation.Valid;
 
 
-@RequestMapping("/Produtos")
+@RequestMapping("/produtos")
 @RestController
 public class ProdutosController {
 	
 	@Autowired
 	private ProdutosRepository produtoRepository;
 	
+	@Autowired
+    private ProdutosService produtosService;
+	
 	@GetMapping
 	public ResponseEntity<List<Produtos>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
-		
-		
 		
 	}
 	
@@ -42,18 +44,18 @@ public class ProdutosController {
 		    return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 		}
 	 
-	 @GetMapping("/categoria/{categoria}")
-		public ResponseEntity<List<Produtos>> getBycategoria(@PathVariable String categoria){
-		    return ResponseEntity.ok(produtoRepository.findAllByCategoriaContainingIgnoreCase(categoria));
-		}
+	 @GetMapping("/saudaveis")
+	    public List<Produtos> getProdutosSaudaveis() {
+	        return produtosService.ProdutosSaudaveis();
+	    }
 	
-	@PostMapping
+	@PostMapping ("/cadastrar")
 	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produto){
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(produtoRepository.save(produto));
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Produtos> put(@Valid @RequestBody Produtos produto){
 		return produtoRepository.findById(produto.getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK)
@@ -61,14 +63,14 @@ public class ProdutosController {
 						.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
-	 @DeleteMapping("/{id}")
-	    public void delete(@PathVariable Long id) {
-	        Optional<Produtos> produto = produtoRepository.findById(id);
+	@DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        Optional<Produtos> produto = produtoRepository.findById(id);
 
-	        if (produto.isEmpty())
-	            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (produto.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-	        produtoRepository.deleteById(id);
-	    }
+        produtoRepository.deleteById(id);
+    }
 
 }

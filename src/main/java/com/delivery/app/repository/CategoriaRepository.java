@@ -10,7 +10,9 @@ import com.delivery.app.model.Categoria;
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
 	List<Categoria> findAllByNomeContainingIgnoreCase(@Param("nome") String nome);
+
+	List<Categoria> findAllByDescricaoContainingIgnoreCase(@Param("descricao")String descricao);
 	
-	
+	Categoria findByDescricao(String descricao);  
 
 }
