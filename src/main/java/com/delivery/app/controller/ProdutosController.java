@@ -49,13 +49,13 @@ public class ProdutosController {
 	        return produtosService.ProdutosSaudaveis();
 	    }
 	
-	@PostMapping
+	@PostMapping ("/cadastrar")
 	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produto){
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(produtoRepository.save(produto));
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Produtos> put(@Valid @RequestBody Produtos produto){
 		return produtoRepository.findById(produto.getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK)
