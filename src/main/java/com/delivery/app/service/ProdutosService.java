@@ -14,25 +14,24 @@ import com.delivery.app.repository.ProdutosRepository;
 @Service
 public class ProdutosService {
 
-    @Autowired
-    private ProdutosRepository produtosRepository;
+	@Autowired
+	private ProdutosRepository produtosRepository;
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
-    
-    public List<Produtos> ProdutosSaudaveis() {
-        Categoria categoriaSaudavel = categoriaRepository.findByDescricao("Produtos saudaveis");
+	public List<Produtos> ProdutosSaudaveis() {
+		Categoria categoriaSaudavel = categoriaRepository.findByDescricao("Produtos saudaveis");
 
-        
-        if (categoriaSaudavel == null) {
-            return List.of(); 
-        }
+		if (categoriaSaudavel == null) {
+			return List.of();
+		}
 
-        List<Produtos> produtosSaudaveis = produtosRepository.findAll().stream()
-                .filter(produto -> produto.getCategoria() != null && produto.getCategoria().getId().equals(categoriaSaudavel.getId()))
-                .collect(Collectors.toList());
+		List<Produtos> produtosSaudaveis = produtosRepository.findAll().stream()
+				.filter(produto -> produto.getCategoria() != null
+						&& produto.getCategoria().getId().equals(categoriaSaudavel.getId()))
+				.collect(Collectors.toList());
 
-        return produtosSaudaveis;
-    }
+		return produtosSaudaveis;
+	}
 }

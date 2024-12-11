@@ -44,7 +44,7 @@ public class CategoriaController {
 
 	@GetMapping("/categoria/{descricao}")
 	public ResponseEntity<List<Categoria>> getByDescricao(@PathVariable String descricao) {
-	    return ResponseEntity.ok(categoriaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
+		return ResponseEntity.ok(categoriaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
 	}
 
 	@PostMapping("/cadastrar")
@@ -62,9 +62,9 @@ public class CategoriaController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		Optional<Categoria> tema = categoriaRepository.findById(id);
+		Optional<Categoria> categoria = categoriaRepository.findById(id);
 
-		if (tema.isEmpty())
+		if (categoria.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
 		categoriaRepository.deleteById(id);

@@ -22,55 +22,52 @@ import com.delivery.app.service.ProdutosService;
 
 import jakarta.validation.Valid;
 
-
 @RequestMapping("/produtos")
 @RestController
 public class ProdutosController {
-	
+
 	@Autowired
 	private ProdutosRepository produtoRepository;
-	
+
 	@Autowired
-    private ProdutosService produtosService;
-	
+	private ProdutosService produtosService;
+
 	@GetMapping
 	public ResponseEntity<List<Produtos>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
-		
+
 	}
-	
-	 @GetMapping("/nome/{nome}")
-		public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nome){
-		    return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
-		}
-	 
-	 @GetMapping("/saudaveis")
-	    public List<Produtos> getProdutosSaudaveis() {
-	        return produtosService.ProdutosSaudaveis();
-	    }
-	
-	@PostMapping ("/cadastrar")
-	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produto){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(produtoRepository.save(produto));
+
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nome) {
+		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
-	
+
+	@GetMapping("/saudaveis")
+	public List<Produtos> getProdutosSaudaveis() {
+		return produtosService.ProdutosSaudaveis();
+	}
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+	}
+
 	@PutMapping("/atualizar")
-	public ResponseEntity<Produtos> put(@Valid @RequestBody Produtos produto){
+	public ResponseEntity<Produtos> put(@Valid @RequestBody Produtos produto) {
 		return produtoRepository.findById(produto.getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.OK)
-						.body(produtoRepository.save(produto)))
-						.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto)))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
-	
+
 	@DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        Optional<Produtos> produto = produtoRepository.findById(id);
+	public void delete(@PathVariable Long id) {
+		Optional<Produtos> produto = produtoRepository.findById(id);
 
-        if (produto.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		if (produto.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        produtoRepository.deleteById(id);
-    }
+		produtoRepository.deleteById(id);
+	}
 
 }
