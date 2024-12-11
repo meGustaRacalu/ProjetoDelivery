@@ -22,7 +22,7 @@ public class Categoria {
 	@Size(min = 5, max = 100, message = "O atributo descricao deve conter no mínimo 05 e no máximo 100 caracteres")
 	private String descricao;
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
 	private List<Produtos> produtos;
 
 	// Getters e Setters
