@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.delivery.app.model.Produtos;
 import com.delivery.app.repository.ProdutosRepository;
+import com.delivery.app.service.ProdutosService;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +30,9 @@ public class ProdutosController {
 	@Autowired
 	private ProdutosRepository produtoRepository;
 	
+	@Autowired
+    private ProdutosService produtosService;
+	
 	@GetMapping
 	public ResponseEntity<List<Produtos>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
@@ -39,6 +43,11 @@ public class ProdutosController {
 		public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nome){
 		    return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 		}
+	 
+	 @GetMapping("/saudaveis")
+	    public List<Produtos> getProdutosSaudaveis() {
+	        return produtosService.ProdutosSaudaveis();
+	    }
 	
 	@PostMapping
 	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produto){
@@ -54,14 +63,14 @@ public class ProdutosController {
 						.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
-	 @DeleteMapping("/{id}")
-	    public void delete(@PathVariable Long id) {
-	        Optional<Produtos> produto = produtoRepository.findById(id);
+	@DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        Optional<Produtos> produto = produtoRepository.findById(id);
 
-	        if (produto.isEmpty())
-	            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (produto.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-	        produtoRepository.deleteById(id);
-	    }
+        produtoRepository.deleteById(id);
+    }
 
 }

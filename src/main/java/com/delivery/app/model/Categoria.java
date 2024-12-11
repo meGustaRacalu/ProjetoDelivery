@@ -1,34 +1,21 @@
 package com.delivery.app.model;
 
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_categorias")
+@Table(name = "tb_categoria")
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private String nome;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties("categoria") 
-    private List<Produtos> produtos;  
+    private String descricao; 
 
     // Getters e Setters
     public Long getId() {
@@ -39,19 +26,11 @@ public class Categoria {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public List<Produtos> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produtos> produtos) {
-        this.produtos = produtos;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
