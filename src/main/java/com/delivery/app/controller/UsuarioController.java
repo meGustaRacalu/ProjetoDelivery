@@ -18,7 +18,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuario));
     }
@@ -35,11 +35,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findAllUsuarios());
     }
 
-    @PutMapping
-    public ResponseEntity<Usuario> updateUsuario(@Valid @RequestBody Usuario usuario) {
+    @PutMapping("/atualizar")
+    public ResponseEntity<Object> updateUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioService.findUsuarioById(usuario.getId())
                 .map(resposta -> ResponseEntity.ok(usuarioService.saveUsuario(usuario)))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Usuário com ID " + usuario.getId() + " não encontrado."));
     }
 
     @DeleteMapping("/{id}")

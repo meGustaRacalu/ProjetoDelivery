@@ -31,10 +31,7 @@ public class ProdutosController {
 	
 	@GetMapping
 	public ResponseEntity<List<Produtos>> getAll() {
-		return ResponseEntity.ok(produtoRepository.findAll());
-		
-		
-		
+		return ResponseEntity.ok(produtoRepository.findAll());		
 	}
 	
 	 @GetMapping("/nome/{nome}")

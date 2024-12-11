@@ -16,16 +16,18 @@ package com.delivery.app.model;
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
-	    @NotNull
+	    @NotNull(message = "Coloque um nome do usuário valido")
 	    private String nome;
 
-	    @NotNull
+	    @NotNull @NotNull(message = "Coloque um E-mail valido")
 	    @Email
 	    private String email;
 
-	    @NotNull
+	    @NotNull(message = "Coloque uma senha valida")
 	    private String senha;
 
+	    private String foto;
+	    
 	    public Long getId() {
 	        return id;
 	    }
@@ -34,12 +36,12 @@ package com.delivery.app.model;
 	        this.id = id;
 	    }
 
-	    public String getNome() {
-	        return nome;
+	    public String getNomeUsuario() {
+	        return nomeUsuario;
 	    }
 
-	    public void setNome(String nome) {
-	        this.nome = nome;
+	    public void setNomeUsuario(String nome) {
+	        this.nome = nomeUsuario;
 	    }
 
 	    public String getEmail() {
@@ -56,5 +58,12 @@ package com.delivery.app.model;
 
 	    public void setSenha(String senha) {
 	        this.senha = senha;
+	    }
+	    public String getFoto() {
+	        return foto;
+	    }
+
+	    public void setFoto(String foto) {
+	        this.foto = foto;
 	    }
 	}
