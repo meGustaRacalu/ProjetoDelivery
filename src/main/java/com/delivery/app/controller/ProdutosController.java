@@ -40,6 +40,12 @@ public class ProdutosController {
 
 	}
 
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Produtos> getById(@PathVariable Long id) {
+		return ResponseEntity.ok(produtoRepository.findById(id).get());
+	}
+	
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
