@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,10 +23,19 @@ public class Categoria {
 	@Size(min = 5, max = 100, message = "O atributo descricao deve conter no mínimo 05 e no máximo 100 caracteres")
 	private String descricao;
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+		 
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Produtos> produtos;
 
-	// Getters e Setters
+
+	public List<Produtos> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produtos> produtos) {
+		this.produtos = produtos;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -42,5 +52,3 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 }
-
-//////////////////////
